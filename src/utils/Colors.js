@@ -7,5 +7,6 @@ export default {
   grayPrimary_1: '#BEBEBE',
   black: '#000',
   white: '#fff',
+  red: '#EB5757',
   transparent: 'transparent'
 }

@@ -82,6 +82,7 @@ function Navigator() {
     )
   }
 
+  // Phần này sẽ phục cho 3 màn Signin, Signup và Forgot Pasword
   return <NavigationContainer>{AuthStack()}</NavigationContainer>
 }
 

@@ -1,14 +1,17 @@
 import React, { useState } from 'react'
-import { View, Text, Image, TextInput, TouchableOpacity } from 'react-native'
+import { View, Text, Image, TouchableOpacity } from 'react-native'
 import { styles } from './styled'
+import PropTypes from 'prop-types'
+
 import Logo from '../../../assets/images/key.png'
-import { Fonts, Routes } from '../../../utils'
-import { Input, Button } from '../../../components'
+import { Fonts, Routes, Constants } from '../../../utils'
+import { Input, Button, WarningMess } from '../../../components'
 
 function Signin(props) {
   const { navigation } = props
-  const [indentifier, setIndentifier] = useState('')
+  const [identifier, setidentifier] = useState('')
   const [password, setPassword] = useState('')
+  const [isEmailValid, setEmailValid] = useState(true)
 
   const renderLogo = () => {
     return <Image source={Logo} style={styles.logoImg} resizeMode={'contain'} />
@@ -21,11 +24,12 @@ function Signin(props) {
   const renderIdentifier = () => {
     return (
       <Input
-        setInputvalue={value => setIndentifier(value)}
-        inputValue={indentifier}
-        placeholder={'Email / phone number'}
+        setInputvalue={value => setidentifier(value)}
+        inputValue={identifier}
+        placeholder={'Email'}
         customStyles={styles.input}
         iconName={'account-supervisor-circle'}
+        value={identifier.toLowerCase()}
       />
     )
   }
@@ -52,8 +56,24 @@ function Signin(props) {
     )
   }
 
+  function submitLogin() {
+    if (identifier.length) {
+      if (Constants.emailRegex.test(identifier)) {
+        setEmailValid(true)
+      } else {
+        setEmailValid(false)
+      }
+    }
+  }
+
   const renderLoginBtn = () => {
-    return <Button title={'Log in'} customStyles={styles.loginBtn} />
+    return (
+      <Button
+        title={'Log in'}
+        customStyles={styles.loginBtn}
+        onPress={() => submitLogin()}
+      />
+    )
   }
 
   const renderLoginFb = () => {
@@ -73,11 +93,18 @@ function Signin(props) {
     )
   }
 
+  const renderWarning = () => {
+    if (!isEmailValid) {
+      return <WarningMess message={'Email format is invalid'} />
+    }
+  }
+
   return (
     <View style={styles.wrapper}>
       {renderLogo()}
       {renderScreenName()}
       {renderIdentifier()}
+      {renderWarning()}
       {renderPassword()}
       {renderForgotPass()}
       {renderLoginBtn()}
@@ -86,6 +113,10 @@ function Signin(props) {
       {renderSuggestSignup()}
     </View>
   )
+}
+
+Signin.propTypes = {
+  navigation: PropTypes.object
 }
 
 export default Signin

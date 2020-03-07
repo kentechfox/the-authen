@@ -14,7 +14,8 @@ function Input(props) {
     placeholder,
     customStyles,
     iconName,
-    onPress
+    onPress,
+    keyboardType
   } = props
 
   return (
@@ -27,6 +28,7 @@ function Input(props) {
         value={inputValue}
         placeholder={placeholder}
         placeholderTextColor={Colors.goldPrimary_2}
+        keyboardType={keyboardType}
         {...props}
       />
       {/* Có iconName thì mới render Icon */}
@@ -49,7 +51,8 @@ Input.propTypes = {
   placeholder: PropTypes.string,
   customStyles: PropTypes.object,
   iconName: PropTypes.string,
-  onPress: PropTypes.func
+  onPress: PropTypes.func,
+  keyboardType: PropTypes.string
 }
 
 export default Input

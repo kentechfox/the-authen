@@ -3,7 +3,7 @@ import { Colors } from '../../utils'
 
 export const styles = StyleSheet.create({
   wrapper: {
-    backgroundColor: Colors.goldPrimary,
+    backgroundColor: Colors.goldPrimary_1,
     height: 45,
     justifyContent: 'center',
     alignItems: 'center',
