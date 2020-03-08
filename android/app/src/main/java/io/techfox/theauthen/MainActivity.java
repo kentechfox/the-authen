@@ -1,4 +1,4 @@
-package com.theauthen;
+package io.techfox.theauthen;
 
 import com.facebook.react.ReactActivity;
 
