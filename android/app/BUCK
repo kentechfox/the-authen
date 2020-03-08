@@ -35,12 +35,12 @@ android_library(
 
 android_build_config(
     name = "build_config",
-    package = "com.theauthen",
+    package = "io.techfox.theauthen",
 )
 
 android_resource(
     name = "res",
-    package = "com.theauthen",
+    package = "io.techfox.theauthen",
     res = "src/main/res",
 )
 

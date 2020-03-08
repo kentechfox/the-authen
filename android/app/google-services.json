@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "101522971662",
+    "firebase_url": "https://theauthen-60233.firebaseio.com",
+    "project_id": "theauthen-60233",
+    "storage_bucket": "theauthen-60233.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:101522971662:android:7a4bb184681179bff7f05f",
+        "android_client_info": {
+          "package_name": "io.techfox.theauthen"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "101522971662-ue7jli29mfss0pmvgmbuquvseu6ue6ni.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "io.techfox.theauthen",
+            "certificate_hash": "5026b6acdcc8a9b327b12098ed45399e15968ce7"
+          }
+        },
+        {
+          "client_id": "101522971662-2u2fii5p0pvll9milmlg74o0t4socu90.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyACsOL5nwZwM1B8ijnhA_BLIxHA4ZzXfe4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "101522971662-2u2fii5p0pvll9milmlg74o0t4socu90.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "101522971662-3u7750b5q356jud7v5856i37rrgt9u4l.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "io.techfox.theauthen"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,4 +1,4 @@
-package com.theauthen;
+package io.techfox.theauthen;
 
 import android.app.Application;
 import android.content.Context;

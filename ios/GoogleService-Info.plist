@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>101522971662-3u7750b5q356jud7v5856i37rrgt9u4l.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.101522971662-3u7750b5q356jud7v5856i37rrgt9u4l</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDQva-0Mb0LwC0nOMslUGj28WVSC3kfY7c</string>
+	<key>GCM_SENDER_ID</key>
+	<string>101522971662</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>io.techfox.theauthen</string>
+	<key>PROJECT_ID</key>
+	<string>theauthen-60233</string>
+	<key>STORAGE_BUCKET</key>
+	<string>theauthen-60233.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:101522971662:ios:cf40f43f8507a2d8f7f05f</string>
+	<key>DATABASE_URL</key>
+	<string>https://theauthen-60233.firebaseio.com</string>
+</dict>
+</plist>
