@@ -12,6 +12,7 @@ function Signin(props) {
   const [identifier, setidentifier] = useState('')
   const [password, setPassword] = useState('')
   const [isEmailValid, setEmailValid] = useState(true)
+  const [isHidePass, setHidePass] = useState(true)
 
   const renderLogo = () => {
     return <Image source={Logo} style={styles.logoImg} resizeMode={'contain'} />
@@ -39,8 +40,11 @@ function Signin(props) {
         setInputvalue={value => setPassword(value)}
         inputValue={password}
         placeholder={'Password'}
-        isSecured
-        iconName={'eye-off'}
+        // Nếu isHidePass === true, mật khẩu bị che,
+        // ngược lại thì sẽ tiết lộ
+        isSecured={isHidePass}
+        iconName={isHidePass ? 'eye-off' : 'eye'}
+        onPress={() => setHidePass(!isHidePass)}
       />
     )
   }
@@ -56,8 +60,11 @@ function Signin(props) {
     )
   }
 
-  function submitLogin() {
+  function onSubmitLogin() {
     if (identifier.length) {
+      // Dùng Regex để validate email, sẽ trả
+      // về boolean. Bạn nào chưa quen với Regex
+      // thì search để tìm hiểu thêm
       if (Constants.emailRegex.test(identifier)) {
         setEmailValid(true)
       } else {
@@ -71,7 +78,7 @@ function Signin(props) {
       <Button
         title={'Log in'}
         customStyles={styles.loginBtn}
-        onPress={() => submitLogin()}
+        onPress={() => onSubmitLogin()}
       />
     )
   }

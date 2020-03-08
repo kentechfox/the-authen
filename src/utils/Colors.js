@@ -7,6 +7,7 @@ export default {
   grayPrimary_1: '#BEBEBE',
   black: '#000',
   white: '#fff',
-  red: '#EB5757',
+  red: '#EB5757', // riêng màu này thì không có trong design, 
+  //mà tôi tự chế để style cho message cảnh báo
   transparent: 'transparent'
 }
