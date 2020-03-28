@@ -1,12 +1,15 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import PropTypes from 'prop-types'
+
+import { Loading } from '../../../components'
 
 function InitAuth(props) {
-  return (
-    <View>
-      <Text>Sign in</Text>
-    </View>
-  )
+  const { isLoading } = props
+  return <Loading isLoading={isLoading} />;
 }
 
 export default InitAuth
+
+InitAuth.propTypes = {
+  isLoading: PropTypes.bool
+}

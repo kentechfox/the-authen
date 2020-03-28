@@ -1,9 +1,16 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import { View, Text, Image } from 'react-native'
+import PropTypes from 'prop-types'
+
 import { styles } from './styled'
-import { Button } from '../../components'
+import { Button, Loading } from '../../components'
+import { signOut } from '../Authen/reducers'
 
 function Profile(props) {
+  const { signOut, authen } = props
+  const { isLoading } = authen
 
   const renderHeader = () => {
     // Avatar và tên của user chúng ta sẽ lấy từ firebase sau
@@ -62,6 +69,7 @@ function Profile(props) {
         title={'Log out'}
         customStyles={styles.btnStyle}
         customTitleStyle={styles.titleStyle}
+        onPress={() => signOut()}
       />
     )
   }
@@ -74,8 +82,28 @@ function Profile(props) {
       {renderPorfolio()}
       {renderSetting()}
       {renderLogout()}
+      <Loading isLoading={isLoading} />
     </View>
   )
 }
 
-export default Profile
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators(
+    {
+      signOut
+    },
+    dispatch
+  )
+}
+const mapStateToProps = state => ({
+  authen: state.authen
+})
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Profile)
+
+Profile.propTypes = {
+  signOut: PropTypes.func,
+  authen: PropTypes.object
+}

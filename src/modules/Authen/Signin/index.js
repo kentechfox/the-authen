@@ -1,15 +1,19 @@
 import React, { useState } from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import { View, Text, Image, TouchableOpacity } from 'react-native'
 import { styles } from './styled'
 import PropTypes from 'prop-types'
 
 import Logo from '../../../assets/images/key.png'
 import { Fonts, Routes, Constants } from '../../../utils'
-import { Input, Button, WarningMess } from '../../../components'
+import { Input, Button, WarningMess, Loading } from '../../../components'
+import { signInAcc } from '../reducers'
 
 function Signin(props) {
-  const { navigation } = props
-  const [identifier, setidentifier] = useState('')
+  const { navigation, authen, signInAcc } = props
+  const { isLoading } = authen
+  const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [isEmailValid, setEmailValid] = useState(true)
   const [isHidePass, setHidePass] = useState(true)
@@ -22,15 +26,15 @@ function Signin(props) {
     return <Text style={Fonts.headerName}>Sign in</Text>
   }
 
-  const renderIdentifier = () => {
+  const renderEmail = () => {
     return (
       <Input
-        setInputvalue={value => setidentifier(value)}
-        inputValue={identifier}
+        setInputvalue={value => setEmail(value)}
+        inputValue={email}
         placeholder={'Email'}
         customStyles={styles.input}
         iconName={'account-supervisor-circle'}
-        value={identifier.toLowerCase()}
+        value={email.toLowerCase()}
       />
     )
   }
@@ -61,12 +65,13 @@ function Signin(props) {
   }
 
   function onSubmitLogin() {
-    if (identifier.length) {
+    if (email.length) {
       // Dùng Regex để validate email, sẽ trả
       // về boolean. Bạn nào chưa quen với Regex
       // thì search để tìm hiểu thêm
-      if (Constants.emailRegex.test(identifier)) {
+      if (Constants.emailRegex.test(email)) {
         setEmailValid(true)
+        signInAcc(email, password)
       } else {
         setEmailValid(false)
       }
@@ -110,7 +115,7 @@ function Signin(props) {
     <View style={styles.wrapper}>
       {renderLogo()}
       {renderScreenName()}
-      {renderIdentifier()}
+      {renderEmail()}
       {renderWarning()}
       {renderPassword()}
       {renderForgotPass()}
@@ -118,12 +123,28 @@ function Signin(props) {
       <Text>or</Text>
       {renderLoginFb()}
       {renderSuggestSignup()}
+      <Loading isLoading={isLoading} />
     </View>
   )
 }
-
-Signin.propTypes = {
-  navigation: PropTypes.object
+const mapStateToProps = state => ({
+  authen: state.authen
+})
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators(
+    {
+      signInAcc
+    },
+    dispatch
+  )
 }
 
-export default Signin
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Signin)
+Signin.propTypes = {
+  navigation: PropTypes.object,
+  signInAcc: PropTypes.func,
+  authen: PropTypes.object
+}

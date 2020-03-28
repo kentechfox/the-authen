@@ -1,4 +1,7 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import PropTypes from 'prop-types'
 
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
@@ -6,7 +9,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-import { Signin, Signup, ForgotPassword } from '../../modules/Authen'
+import { Signin, Signup, ForgotPassword, InitAuth } from '../../modules/Authen'
 import Home from '../../modules/Home'
 import Profile from '../../modules/Profile'
 import { Routes, Colors } from '../../utils'
@@ -14,9 +17,23 @@ import { Routes, Colors } from '../../utils'
 const Stack = createStackNavigator()
 const Tab = createBottomTabNavigator()
 
-function Navigator() {
+function Navigator(props) {
+  const { authen } = props
+  const { userInfo } = authen
+  const [isLoading, setLoading] = useState(true)
+  const [hasToken, setIsToken] = useState(false)
+
+  useEffect(() => {
+    if (userInfo.fullName) {
+      setIsToken(true)
+    } else {
+      setIsToken(false)
+    }
+    setLoading(false)
+  }, [userInfo])
+
   function CommonStack(name, component) {
-    return <Stack.Screen name={name} component={component} />;
+    return <Stack.Screen name={name} component={component} />
   }
 
   function AuthStack() {
@@ -60,7 +77,6 @@ function Navigator() {
     }
   }
 
-
   function TabNavigator() {
     return (
       <Tab.Navigator
@@ -81,8 +97,24 @@ function Navigator() {
       </Tab.Navigator>
     )
   }
-
-  return <NavigationContainer>{AuthStack()}</NavigationContainer>
+  if (isLoading) {
+    return <InitAuth isLoading={isLoading} />
+  }
+  return (
+    <NavigationContainer>
+      {!hasToken ? AuthStack() : TabNavigator()}
+    </NavigationContainer>
+  )
 }
+const mapStateToProps = state => ({
+  authen: state.authen
+})
 
-export default Navigator
+export default connect(
+  mapStateToProps,
+  null
+)(Navigator)
+
+Navigator.propTypes = {
+  authen: PropTypes.object
+}
