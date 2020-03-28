@@ -36,6 +36,13 @@ target 'theauthen' do
 
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
   pod 'Firebase/Analytics'
+
+  pod 'Firebase/Messaging', '~> 6.13.0'
+  pod 'Firebase/Auth', '~> 6.13.0'
+  pod 'Firebase/Core', '~> 6.13.0' 
+  pod 'Firebase/Firestore', '~> 6.13.0' 
+  pod 'Firebase/Storage', '~> 6.13.0' 
+  pod 'Firebase/Database', '~> 6.13.0'
   
   target 'theauthenTests' do
     inherit! :search_paths

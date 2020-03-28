@@ -9,5 +9,6 @@ export default {
   white: '#fff',
   red: '#EB5757', // riêng màu này thì không có trong design, 
   //mà tôi tự chế để style cho message cảnh báo
-  transparent: 'transparent'
+  transparent: 'transparent',
+  darkTranSparent: 'rgba(0, 0, 0, 0.5)'
 }

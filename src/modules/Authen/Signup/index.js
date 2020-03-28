@@ -1,18 +1,22 @@
 import React, { useState } from 'react'
 import { View, Text } from 'react-native'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
 import Icon from 'react-native-vector-icons/Ionicons'
 
 import { styles } from './styled'
-import { Input, Button } from '../../../components'
+import { Input, Button, Loading } from '../../../components'
 import { Fonts, Colors } from '../../../utils'
+import { signUpAcc } from '../reducers'
 
 function Signup(props) {
-  const { navigation } = props
+  const { navigation, signUpAcc, authen } = props
   const [fullName, setFullName] = useState('')
   const [phoneNum, setPhoneNum] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const { isLoading } = authen
 
   const renderBackIcon = () => {
     return (
@@ -33,7 +37,6 @@ function Signup(props) {
     return (
       <Input
         setInputvalue={value => setFullName(value)}
-        inputValue={fullName}
         placeholder={'Full Name'}
         customStyles={styles.input}
       />
@@ -55,7 +58,7 @@ function Signup(props) {
     return (
       <Input
         setInputvalue={value => setEmail(value)}
-        inputValue={email}
+        inputValue={email.toLowerCase()}
         placeholder={'Email'}
       />
     )
@@ -73,7 +76,15 @@ function Signup(props) {
   }
 
   const renderSignupBtn = () => {
-    return <Button title={'Sign up'} customStyles={styles.signupBtn} />
+    return (
+      <Button
+        title={'Sign up'}
+        customStyles={styles.signupBtn}
+        onPress={() =>
+          signUpAcc(email, password, phoneNum, fullName, navigation)
+        }
+      />
+    )
   }
   return (
     <View style={styles.wrapper}>
@@ -84,12 +95,30 @@ function Signup(props) {
       {renderEmail()}
       {renderPassword()}
       {renderSignupBtn()}
+      <Loading isLoading={isLoading} />
     </View>
   )
 }
 
-Signup.propTypes = {
-  navigation: PropTypes.object
+const mapStateToProps = state => ({
+  authen: state.authen
+})
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators(
+    {
+      signUpAcc
+    },
+    dispatch
+  )
 }
 
-export default Signup
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Signup)
+
+Signup.propTypes = {
+  navigation: PropTypes.object,
+  authen: PropTypes.object,
+  signUpAcc: PropTypes.func
+}
