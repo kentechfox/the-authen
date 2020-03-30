@@ -4,7 +4,7 @@ import {
   setIsPasswordValid,
   setIsEmailExist,
   setIsPasswordWrong
-} from '../modules/ErrorBoundary/action-type'
+} from '../modules/ErrorBoundary/action-types'
 
 function RequestHandler(errorCode, dispatch) {
   function otherError() {

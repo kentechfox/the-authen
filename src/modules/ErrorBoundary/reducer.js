@@ -8,7 +8,7 @@ import {
   IS_EMAIL_EXIST,
   IS_PASSWORD_WRONG,
   RESET_ERROR_STATE
-} from './action-type'
+} from './action-types'
 
 const initialState = Model(null)
 

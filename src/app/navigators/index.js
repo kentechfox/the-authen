@@ -105,10 +105,7 @@ function Navigator(props) {
   }
   return (
     <NavigationContainer>
-      <ErrorBoundary>
-        {!hasEmail ? AuthStack() : TabNavigator()}
-      </ErrorBoundary>
-     
+      <ErrorBoundary>{!hasEmail ? AuthStack() : TabNavigator()}</ErrorBoundary>
     </NavigationContainer>
   )
 }

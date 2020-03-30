@@ -10,7 +10,8 @@ import {
 import Model from './model'
 import { Storage, Constants, RequestHandler } from '../../utils'
 import firebase from 'react-native-firebase'
-import { setResetErrorState } from '../ErrorBoundary/action-type'
+import { setResetErrorState } from '../ErrorBoundary/action-types'
+
 
 const initialState = Model(null)
 const firebaseAuth = firebase.auth()
@@ -30,6 +31,7 @@ export const signOut = () => async dispatch => {
 export const forgotPass = email => async dispatch => {
   dispatch(setLoading(true))
   dispatch(setResetErrorState())
+  
   try {
     await firebaseAuth.sendPasswordResetEmail(email)
     dispatch(setForgotPassResponse(true))
@@ -48,6 +50,7 @@ export const signUpAcc = (
 ) => async dispatch => {
   dispatch(setLoading(true))
   dispatch(setResetErrorState())
+  
   try {
     const response = await firebaseAuth.createUserWithEmailAndPassword(
       email,
@@ -77,6 +80,7 @@ export const signUpAcc = (
 export const signInAcc = (email, password) => async dispatch => {
   dispatch(setLoading(true))
   dispatch(setResetErrorState())
+  
   try {
     const response = await firebaseAuth.signInWithEmailAndPassword(
       email,
