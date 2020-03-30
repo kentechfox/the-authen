@@ -66,9 +66,6 @@ function Signin(props) {
 
   function onSubmitLogin() {
     if (email.length) {
-      // Dùng Regex để validate email, sẽ trả
-      // về boolean. Bạn nào chưa quen với Regex
-      // thì search để tìm hiểu thêm
       if (Constants.emailRegex.test(email)) {
         setEmailValid(true)
         signInAcc(email, password)
@@ -123,10 +120,12 @@ function Signin(props) {
       <Text>or</Text>
       {renderLoginFb()}
       {renderSuggestSignup()}
+      {/* hide code */}
       <Loading isLoading={isLoading} />
     </View>
   )
 }
+
 const mapStateToProps = state => ({
   authen: state.authen
 })
@@ -138,6 +137,8 @@ const mapDispatchToProps = dispatch => {
     dispatch
   )
 }
+
+/* -------------*/ 
 
 export default connect(
   mapStateToProps,

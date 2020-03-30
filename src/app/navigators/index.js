@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
 
 import { NavigationContainer } from '@react-navigation/native'
@@ -8,7 +7,6 @@ import { createStackNavigator } from '@react-navigation/stack'
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import Icon from 'react-native-vector-icons/MaterialIcons';
-
 import { Signin, Signup, ForgotPassword, InitAuth } from '../../modules/Authen'
 import Home from '../../modules/Home'
 import Profile from '../../modules/Profile'
@@ -21,13 +19,13 @@ function Navigator(props) {
   const { authen } = props
   const { userInfo } = authen
   const [isLoading, setLoading] = useState(true)
-  const [hasToken, setIsToken] = useState(false)
+  const [hasEmail, setHasEmail] = useState(false)
 
   useEffect(() => {
-    if (userInfo.fullName) {
-      setIsToken(true)
+    if (userInfo.email) {
+      setHasEmail(true)
     } else {
-      setIsToken(false)
+      setHasEmail(false)
     }
     setLoading(false)
   }, [userInfo])
@@ -98,11 +96,15 @@ function Navigator(props) {
     )
   }
   if (isLoading) {
+    // Mới đầu vào app, isLoading === true sẽ nhảy vào đây,
+    // đợi check xem có email hay không, có hay không thì
+    // isLoading vẫn trả về false để nhảy
+    // vào NavigationContainer phía dưới
     return <InitAuth isLoading={isLoading} />
   }
   return (
     <NavigationContainer>
-      {!hasToken ? AuthStack() : TabNavigator()}
+      {!hasEmail ? AuthStack() : TabNavigator()}
     </NavigationContainer>
   )
 }
