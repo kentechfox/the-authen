@@ -2,7 +2,7 @@ import { pathOr, construct, assocPath, or } from 'ramda'
 function Authen(record) {
   this.isLoading = pathOr(false, ['isLoading'], record)
   this.userInfo = pathOr({}, ['userInfo'], record)
-  this.forgotPass = pathOr(null, ['forgotPass'], record)
+  this.isForgot = pathOr(false, ['isForgot'], record)
 }
 Authen.prototype = {
   setLoading: function(value) {
@@ -12,7 +12,7 @@ Authen.prototype = {
     return assocPath(['userInfo'], value, this)
   },
   setForgotPass: function(value) {
-    return assocPath(['forgotPass'], value, this)
+    return assocPath(['isForgot'], value, this)
   }
 }
 

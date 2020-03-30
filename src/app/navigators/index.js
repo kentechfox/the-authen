@@ -11,6 +11,7 @@ import { Signin, Signup, ForgotPassword, InitAuth } from '../../modules/Authen'
 import Home from '../../modules/Home'
 import Profile from '../../modules/Profile'
 import { Routes, Colors } from '../../utils'
+import ErrorBoundary from '../../modules/ErrorBoundary'
 
 const Stack = createStackNavigator()
 const Tab = createBottomTabNavigator()
@@ -104,7 +105,7 @@ function Navigator(props) {
   }
   return (
     <NavigationContainer>
-      {!hasEmail ? AuthStack() : TabNavigator()}
+      <ErrorBoundary>{!hasEmail ? AuthStack() : TabNavigator()}</ErrorBoundary>
     </NavigationContainer>
   )
 }

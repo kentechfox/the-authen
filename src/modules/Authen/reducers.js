@@ -8,17 +8,13 @@ import {
   setForgotPassResponse
 } from './action-types'
 import Model from './model'
-import { Storage, Constants } from '../../utils'
+import { Storage, Constants, RequestHandler } from '../../utils'
 import firebase from 'react-native-firebase'
+import { setResetErrorState } from '../ErrorBoundary/action-types'
+
 
 const initialState = Model(null)
-// khai báo firebase.auth(), gán vào firebaseAuth để
-// sử dụng được các method của firebase.auth() phục vụ
-// cho các nghiệp vụ về authen (signIn, signUp, ...)
 const firebaseAuth = firebase.auth()
-// khai báo firebase.firestore(), gán vào fireStore để
-// sử dụng được các method của firebase.firestore() phục vụ
-// cho các nghiệp vụ về fireStore (lưu trữ, truy vấn,...)
 const fireStore = firebase.firestore()
 
 export const signOut = () => async dispatch => {
@@ -34,11 +30,14 @@ export const signOut = () => async dispatch => {
 }
 export const forgotPass = email => async dispatch => {
   dispatch(setLoading(true))
+  dispatch(setResetErrorState())
+  
   try {
     await firebaseAuth.sendPasswordResetEmail(email)
     dispatch(setForgotPassResponse(true))
   } catch (error) {
-    console.log('FORGOT PASS ERROR', error)
+    const errorCode = error.code
+    RequestHandler(errorCode, dispatch)
   }
   dispatch(setLoading(false))
 }
@@ -50,6 +49,8 @@ export const signUpAcc = (
   fullName
 ) => async dispatch => {
   dispatch(setLoading(true))
+  dispatch(setResetErrorState())
+  
   try {
     const response = await firebaseAuth.createUserWithEmailAndPassword(
       email,
@@ -70,16 +71,16 @@ export const signUpAcc = (
       .doc(userUID)
       .set(data)
   } catch (error) {
-    console.log('SIGN UP ERROR', error)
-    // Phần error này tôi sẽ dùng 1 module về Error riêng để thu nhận
-    // và handle các error, sau đó hiển thị lên cho user hoặc làm gì
-    // tuỳ thích
+    const errorCode = error.code
+    RequestHandler(errorCode, dispatch)
   }
   dispatch(setLoading(false))
 }
 
 export const signInAcc = (email, password) => async dispatch => {
   dispatch(setLoading(true))
+  dispatch(setResetErrorState())
+  
   try {
     const response = await firebaseAuth.signInWithEmailAndPassword(
       email,
@@ -100,8 +101,8 @@ export const signInAcc = (email, password) => async dispatch => {
       dispatch(setLoginDataResponse(userInfo))
     }
   } catch (error) {
-    console.log('SIGN IN ERROR', error)
-    dispatch(setLoginDataResponse(error))
+    const errorCode = error.code
+    RequestHandler(errorCode, dispatch)
   }
   dispatch(setLoading(false))
 }

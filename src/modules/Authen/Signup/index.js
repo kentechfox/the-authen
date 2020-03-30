@@ -6,8 +6,8 @@ import PropTypes from 'prop-types'
 import Icon from 'react-native-vector-icons/Ionicons'
 
 import { styles } from './styled'
-import { Input, Button, Loading } from '../../../components'
-import { Fonts, Colors } from '../../../utils'
+import { Input, Button, Loading, WarningMess } from '../../../components'
+import { Fonts, Colors, Constants } from '../../../utils'
 import { signUpAcc } from '../reducers'
 
 function Signup(props) {
@@ -17,6 +17,7 @@ function Signup(props) {
   const [phoneNum, setPhoneNum] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [isEmailValid, setEmailValid] = useState(true)
 
   const renderBackIcon = () => {
     return (
@@ -74,18 +75,31 @@ function Signup(props) {
       />
     )
   }
-
+  function onSubmitSignup() {
+    if (email.length) {
+      if (Constants.emailRegex.test(email)) {
+        setEmailValid(true)
+        signUpAcc(email, password, phoneNum, fullName, navigation)
+      } else {
+        setEmailValid(false)
+      }
+    }
+  }
   const renderSignupBtn = () => {
     return (
       <Button
         title={'Sign up'}
         customStyles={styles.signupBtn}
-        onPress={() =>
-          signUpAcc(email, password, phoneNum, fullName, navigation)
-        }
+        onPress={() => onSubmitSignup()}
       />
     )
   }
+  const renderWarning = () => {
+    if (!isEmailValid) {
+      return <WarningMess message={'Email format is invalid'} />
+    }
+  }
+
   return (
     <View style={styles.wrapper}>
       {renderBackIcon()}
@@ -93,6 +107,7 @@ function Signup(props) {
       {renderFullName()}
       {renderPhoneNum()}
       {renderEmail()}
+      {renderWarning()}
       {renderPassword()}
       {renderSignupBtn()}
       <Loading isLoading={isLoading} />
