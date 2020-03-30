@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { View, Text, Image, TouchableOpacity } from 'react-native'
@@ -129,6 +129,7 @@ function Signin(props) {
 const mapStateToProps = state => ({
   authen: state.authen
 })
+
 const mapDispatchToProps = dispatch => {
   return bindActionCreators(
     {
@@ -137,8 +138,6 @@ const mapDispatchToProps = dispatch => {
     dispatch
   )
 }
-
-/* -------------*/ 
 
 export default connect(
   mapStateToProps,
