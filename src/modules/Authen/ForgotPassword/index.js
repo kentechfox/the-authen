@@ -1,16 +1,20 @@
 import React, { useState } from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import { View, Text } from 'react-native'
 import PropTypes from 'prop-types'
 import Icon from 'react-native-vector-icons/Ionicons'
 
 import { styles } from './styled'
-import { Input, Button } from '../../../components'
-import { Fonts, Colors } from '../../../utils'
+import { Input, Button, WarningMess, Loading } from '../../../components'
+import { Fonts, Colors, Constants } from '../../../utils'
+import { forgotPass } from '../reducers'
 
 function ForgotPassword(props) {
-  const { navigation } = props
+  const { navigation, forgotPass, authen } = props
+  const { isLoading } = authen
   const [email, setEmail] = useState('')
-
+  const [isEmailValid, setEmailValid] = useState(true)
 
   const renderBackIcon = () => {
     return (
@@ -32,7 +36,8 @@ function ForgotPassword(props) {
   const renderLovelyMessage = () => {
     return (
       <Text style={styles.message}>
-        Please enter your email. We will send a reset password link to your mailbox!
+        Please enter your email. We will send a reset password link to your
+        mailbox!
       </Text>
     )
   }
@@ -43,12 +48,35 @@ function ForgotPassword(props) {
         setInputvalue={value => setEmail(value)}
         inputValue={email}
         placeholder={'Email'}
+        value={email.toLowerCase()}
       />
     )
   }
 
+  function onSubmitResetPassword() {
+    if (email.length) {
+      if (Constants.emailRegex.test(email)) {
+        setEmailValid(true)
+        forgotPass(email)
+      } else {
+        setEmailValid(false)
+      }
+    }
+  }
+
   const renderForgotBtn = () => {
-    return <Button title={'Send'} customStyles={styles.forgotBtn} />
+    return (
+      <Button
+        title={'Send'}
+        customStyles={styles.forgotBtn}
+        onPress={() => onSubmitResetPassword()}
+      />
+    )
+  }
+  const renderWarning = () => {
+    if (!isEmailValid) {
+      return <WarningMess message={'Email format is invalid'} />
+    }
   }
   return (
     <View style={styles.wrapper}>
@@ -56,13 +84,32 @@ function ForgotPassword(props) {
       {renderScreenName()}
       {renderLovelyMessage()}
       {renderEmail()}
+      {renderWarning()}
       {renderForgotBtn()}
+      <Loading isLoading={isLoading} />
     </View>
   )
 }
 
-ForgotPassword.propTypes = {
-  navigation: PropTypes.object
+const mapStateToProps = state => ({
+  authen: state.authen
+})
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators(
+    {
+      forgotPass
+    },
+    dispatch
+  )
 }
 
-export default ForgotPassword
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ForgotPassword)
+
+ForgotPassword.propTypes = {
+  navigation: PropTypes.object,
+  forgotPass: PropTypes.func,
+  authen: PropTypes.object
+}

@@ -12,11 +12,11 @@ import { signUpAcc } from '../reducers'
 
 function Signup(props) {
   const { navigation, signUpAcc, authen } = props
+  const { isLoading } = authen
   const [fullName, setFullName] = useState('')
   const [phoneNum, setPhoneNum] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const { isLoading } = authen
 
   const renderBackIcon = () => {
     return (
