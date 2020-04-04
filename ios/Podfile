@@ -43,6 +43,10 @@ target 'theauthen' do
   pod 'Firebase/Firestore', '~> 6.13.0' 
   pod 'Firebase/Storage', '~> 6.13.0' 
   pod 'Firebase/Database', '~> 6.13.0'
+
+  pod 'FBSDKCoreKit'
+  pod 'FBSDKLoginKit'
+  pod 'FBSDKShareKit'
   
   target 'theauthenTests' do
     inherit! :search_paths

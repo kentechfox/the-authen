@@ -8,10 +8,10 @@ import PropTypes from 'prop-types'
 import Logo from '../../../assets/images/key.png'
 import { Fonts, Routes, Constants } from '../../../utils'
 import { Input, Button, WarningMess, Loading } from '../../../components'
-import { signInAcc } from '../reducers'
+import { signInAcc, loginWithFacebook } from '../reducers'
 
 function Signin(props) {
-  const { navigation, authen, signInAcc } = props
+  const { navigation, authen, signInAcc, loginWithFacebook } = props
   const { isLoading } = authen
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -87,7 +87,11 @@ function Signin(props) {
 
   const renderLoginFb = () => {
     return (
-      <Button title={'Log in with Facebook'} customStyles={styles.loginFb} />
+      <Button
+        title={'Log in with Facebook'}
+        customStyles={styles.loginFb}
+        onPress={() => loginWithFacebook()}
+      />
     )
   }
 
@@ -133,7 +137,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => {
   return bindActionCreators(
     {
-      signInAcc
+      signInAcc,
+      loginWithFacebook
     },
     dispatch
   )

@@ -10,25 +10,33 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Signin, Signup, ForgotPassword, InitAuth } from '../../modules/Authen'
 import Home from '../../modules/Home'
 import Profile from '../../modules/Profile'
-import { Routes, Colors } from '../../utils'
+import { Routes, Colors, Storage, Constants } from '../../utils'
 import ErrorBoundary from '../../modules/ErrorBoundary'
 
 const Stack = createStackNavigator()
 const Tab = createBottomTabNavigator()
 
-function Navigator(props) {
+function Navigator (props) {
   const { authen } = props
   const { userInfo } = authen
   const [isLoading, setLoading] = useState(true)
-  const [hasEmail, setHasEmail] = useState(false)
+  const [hasCredential, setHasCredential] = useState(false)
 
-  useEffect(() => {
-    if (userInfo.email) {
-      setHasEmail(true)
+  async function checkUserExist() {
+    const data = await Storage.get(
+      Constants.storageKey.auth.USER_INFO_STORAGE_KEY,
+      data
+    )
+    if (data && data.credential) {
+      setHasCredential(true)
     } else {
-      setHasEmail(false)
+      setHasCredential(false)
     }
     setLoading(false)
+  }
+
+  useEffect(() => {
+    checkUserExist()
   }, [userInfo])
 
   function CommonStack(name, component) {
@@ -105,7 +113,9 @@ function Navigator(props) {
   }
   return (
     <NavigationContainer>
-      <ErrorBoundary>{!hasEmail ? AuthStack() : TabNavigator()}</ErrorBoundary>
+      <ErrorBoundary>
+        {!hasCredential ? AuthStack() : TabNavigator()}
+      </ErrorBoundary>
     </NavigationContainer>
   )
 }
