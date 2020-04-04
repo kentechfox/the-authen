@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { View, Text, Image } from 'react-native'
@@ -10,7 +10,15 @@ import { signOut } from '../Authen/reducers'
 
 function Profile(props) {
   const { signOut, authen } = props
-  const { isLoading } = authen
+  const { isLoading, userInfo } = authen
+  const [avatar, setUserAvatar] = useState('https://bit.ly/3dWLc0b')
+
+  useEffect(() => {
+    const { avatar } = userInfo
+    if (avatar && avatar.length) {
+      setUserAvatar(userInfo.avatar)
+    }
+  }, [userInfo])
 
   const renderHeader = () => {
     // Avatar và tên của user chúng ta sẽ lấy từ firebase sau
@@ -18,10 +26,7 @@ function Profile(props) {
       <View style={styles.headerWrapper}>
         <Text style={styles.userName}>Ken-san</Text>
         <View style={styles.avatarWrapper}>
-          <Image
-            source={{ uri: 'http://bit.ly/2vAzash'}}
-            style={styles.avatar}
-          />
+          <Image source={{ uri: avatar }} style={styles.avatar} />
         </View>
       </View>
     )
@@ -106,4 +111,4 @@ export default connect(
 Profile.propTypes = {
   signOut: PropTypes.func,
   authen: PropTypes.object
-}
+};

@@ -31,18 +31,16 @@ export const styles = StyleSheet.create({
     marginRight: 10
   },
   avatarWrapper: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
+    borderRadius: 26,
     borderStyle: 'solid',
-    borderWidth: 1,
+    borderWidth: 0.5,
     borderColor: Colors.black,
     justifyContent: 'center',
     alignItems: 'center'
   },
   avatar: {
-    width: 38,
-    height: 38,
-    borderRadius: 19
+    width: 50,
+    height: 50,
+    borderRadius: 25
   }
 })
