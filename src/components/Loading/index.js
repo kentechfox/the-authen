@@ -8,7 +8,7 @@ function Loading(props) {
   const { isLoading } = props
   if (isLoading) {
     return (
-      <View style={styles.wrapperss}>
+      <View style={styles.wrappers}>
         <ActivityIndicator color={Colors.grayPrimary_1} size={'large'} />
       </View>
     )
